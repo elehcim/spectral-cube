@@ -2765,7 +2765,7 @@ class BaseSpectralCube(BaseNDClass, MaskableArrayMixinClass,
         # 'images' is a generator
         # the boolean check will skip the function for bad spectra
         images = ((data[ii,:,:],
-                   self.mask.include(view=(ii, slice(None), slice(None))),
+                   self.mask.include(view=(ii, slice(None), slice(None))) if self.mask is not None else True,
                    ii,
                    )
                   for ii in range(shape[0]))
@@ -2820,7 +2820,7 @@ class BaseSpectralCube(BaseNDClass, MaskableArrayMixinClass,
         # the boolean check will skip the function for bad spectra
         # TODO: should spatial good/bad be cached?
         spectra = ((data[:,jj,ii],
-                    self.mask.include(view=(slice(None), jj, ii)),
+                    self.mask.include(view=(slice(None), jj, ii)) if self.mask is not None else True,
                     ii, jj,
                    )
                    for jj in range(shape[1])
