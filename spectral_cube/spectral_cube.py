@@ -2562,6 +2562,7 @@ class BaseSpectralCube(BaseNDClass, MaskableArrayMixinClass,
             return ndimage.filters.median_filter(im, size=ksize, **kwargs)
 
         newcube = self.apply_function_parallel_spatial(_msmooth_image,
+                                                       unit=self.unit,
                                                        **kwargs)
 
         return newcube
@@ -2591,6 +2592,7 @@ class BaseSpectralCube(BaseNDClass, MaskableArrayMixinClass,
             return convolve(img, kernel, normalize_kernel=True, **kwargs)
 
         newcube = self.apply_function_parallel_spatial(_gsmooth_image,
+                                                       unit=self.unit,
                                                        **kwargs)
 
         return newcube
@@ -2626,6 +2628,7 @@ class BaseSpectralCube(BaseNDClass, MaskableArrayMixinClass,
                                                      verbose=verbose,
                                                      num_cores=num_cores,
                                                      use_memmap=use_memmap,
+                                                     unit=self.unit,
                                                      **kwargs)
 
     def _apply_function_parallel_base(self,
@@ -2637,6 +2640,7 @@ class BaseSpectralCube(BaseNDClass, MaskableArrayMixinClass,
                                       use_memmap=True,
                                       parallel=True,
                                       memmap_dir=None,
+                                      unit=None,
                                       **kwargs
                                      ):
         """
@@ -2719,7 +2723,7 @@ class BaseSpectralCube(BaseNDClass, MaskableArrayMixinClass,
 
         # TODO: do something about the mask?
         newcube = self._new_cube_with(data=outcube, wcs=self.wcs,
-                                      mask=self.mask, meta=self.meta,
+                                      mask=self.mask, meta=self.meta, unit=unit,
                                       fill_value=self.fill_value)
 
         return newcube
@@ -2730,6 +2734,7 @@ class BaseSpectralCube(BaseNDClass, MaskableArrayMixinClass,
                                         verbose=0,
                                         use_memmap=True,
                                         parallel=True,
+                                        unit=None,
                                         **kwargs
                                        ):
         """
@@ -2776,6 +2781,7 @@ class BaseSpectralCube(BaseNDClass, MaskableArrayMixinClass,
                                                   parallel=parallel,
                                                   num_cores=num_cores,
                                                   use_memmap=use_memmap,
+                                                  unit=unit,
                                                   **kwargs)
 
     def apply_function_parallel_spectral(self,
@@ -2784,6 +2790,7 @@ class BaseSpectralCube(BaseNDClass, MaskableArrayMixinClass,
                                          verbose=0,
                                          use_memmap=True,
                                          parallel=True,
+                                         unit=None,
                                          **kwargs
                                         ):
         """
@@ -2862,6 +2869,7 @@ class BaseSpectralCube(BaseNDClass, MaskableArrayMixinClass,
                                                      num_cores=num_cores,
                                                      use_memmap=use_memmap,
                                                      verbose=verbose,
+                                                     unit=self.unit,
                                                      **kwargs)
 
     def spectral_smooth(self, kernel,
@@ -2900,6 +2908,7 @@ class BaseSpectralCube(BaseNDClass, MaskableArrayMixinClass,
                                                      num_cores=num_cores,
                                                      use_memmap=use_memmap,
                                                      verbose=verbose,
+                                                     unit=self.unit,
                                                      **kwargs)
 
     def spectral_interpolate(self, spectral_grid,
